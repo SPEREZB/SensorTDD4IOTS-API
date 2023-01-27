@@ -3,9 +3,11 @@ package com.distribuidas.SensorTDD4IOTS.tddt4iots.entities;
 //import com.app.tddt4iots.enums.*;
 import lombok.Data;
  import lombok.NoArgsConstructor;
- 
-import javax.persistence.*;
- import java.util.ArrayList;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.ArrayList;
  
 @Entity
  @Table(name = "Doctor")
