@@ -10,9 +10,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
  import lombok.NoArgsConstructor;
- 
-import javax.persistence.*;
-import javax.persistence.Id;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -22,11 +20,11 @@ import java.util.Date;
  @NoArgsConstructor
  public class FrecuenciaCardiaca {
      
-    @Id
+     @Id
      @GeneratedValue(strategy = GenerationType.AUTO)
      private Long id;
      
-    @Column(name = "id", nullable = false, unique = false, length = 30)
+    @Column(name = "id", nullable = false, unique = false, length = 30,insertable=false, updatable=false)
     private String ids;
  
     @Column(name = "idpulsaciones", nullable = false, unique = false) 

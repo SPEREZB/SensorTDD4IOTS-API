@@ -1,13 +1,12 @@
 package com.distribuidas.SensorTDD4IOTS.tddt4iots.entities;
 
 //import com.app.tddt4iots.enums.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Data;
  import lombok.NoArgsConstructor;
- 
-import javax.persistence.*;
+import jakarta.persistence.*;
  import java.util.ArrayList;
-import java.util.ArrayList;
-import java.util.ArrayList;
  
 @Entity
  @Table(name = "Persona")

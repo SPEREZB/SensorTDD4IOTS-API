@@ -1,10 +1,10 @@
 package com.distribuidas.SensorTDD4IOTS.tddt4iots.entities;
  
 //import com.app.tddt4iots.enums.*;
+import jakarta.persistence.*;
 import lombok.Data;
  import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
  import java.util.ArrayList;
  
 @Entity
@@ -13,11 +13,11 @@ import javax.persistence.*;
  @NoArgsConstructor
  public class Usuario {
      
-    @Id
+     @Id
      @GeneratedValue(strategy = GenerationType.AUTO)
      private Long id;
      
-    @Column(name = "nombreusuario", nullable = false, unique = false, length = 30) 
+    @Column(name = "nombreusuario", nullable = false, unique = false, length = 30)
     private String nombreusuario; 
  
     @Column(name = "clave", nullable = false, unique = false, length = 30) 
