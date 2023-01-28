@@ -30,8 +30,14 @@ import lombok.Data;
     private String tipoDeUsuario; 
  
    @OneToMany(mappedBy = "id") 
-    private ArrayList<Persona> persona; 
- 
+    private ArrayList<Persona> persona;
+
+    public String getNombreUsuario() {
+        return nombreusuario;
+    }
+    public String getClave() {
+        return clave;
+    }
     
     @Override
     public int hashCode() {
