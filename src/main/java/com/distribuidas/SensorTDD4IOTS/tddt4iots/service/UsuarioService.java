@@ -11,7 +11,7 @@ import java.util.List;
 public class UsuarioService {
     @Autowired
     private UsuarioDao usuarioDao;
-    public List<Usuario> getAllPersonas (){
+    public List<Usuario> getTodosUsuarios (){
         return usuarioDao.findAll();
     }
 }
