@@ -5,9 +5,7 @@ import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuario")
@@ -23,109 +21,75 @@ public class UsuarioApi {
     }
 
 
-    String date,us,ps;
-    int index=0,datel,inicio,inicio2,listar=0;
-    int fin=1,fin2=1,finpr=1,finpr2=1;
-    @PostMapping("/VerifyUsers/")
+    String date, us, ps;
+    int index = 0, datel, inicio, inicio2, cantidad = 0;
+    int fin = 1, fin2 = 1, finpr = 1, finpr2 = 1;
+
+    @PostMapping("/VerificarUsuarios/")
     public ResponseEntity<?> login(@RequestBody Usuario usuario) {
 // Comprobar si el nombre de usuario y la contraseña son correctos
 
-        listar=getUsuario().getBody().size();
-        while (listar>0)
-        {
-
-            date= getUsuario().getBody().get(index).toString();
-            datel=date.length();
-            us= getUsername();
-            ps= getPassword();
-
+        cantidad = getUsuario().getBody().size();
+        while (cantidad > 0) {
+            date = getUsuario().getBody().get(index).toString();
+            datel = date.length();
+            getUsPs();
+             //String algo= usServicio.getNombreUsuario();
             if (usuario.getNombreUsuario().equals(us) && usuario.getClave().equals(ps)) {
-
+                cont = 0;
+                index = 0;
                 return ResponseEntity.ok("Login exitoso");
             } else {
-                index= index+1;
-            }
-            listar=listar-1;
-        }
-        return ResponseEntity.ok("Nombre de usuario o contraseña incorrectos");
-    }
-
-    private String getUsername()
-    {
-        while(datel>0)
-        {
-            fin=inicio+9;
-            us = date.substring(inicio,fin);
-            if(us.compareTo("Username=")==0)
-            {
-                fin2=fin+1;
-
-                while(us.contains(",")==false)
-                {
-                    us = date.substring(fin,fin2);
-                    fin2=fin2+1;
+                index = index + 1;
+                if(index+1>cantidad){
+                    cont = 0;
+                    index = 0;
+                    return ResponseEntity.ok("Nombre de usuario o contraseña incorrectos");
                 }
-                inicio2=fin2;
-                finpr=fin2+9;
-                fin2=fin2-2;
-                us = date.substring(fin,fin2);
-                return us;
-            }
-            else{
-                inicio=inicio+1;
             }
         }
-        return "NO HAY USUARIOS";
+        return ResponseEntity.ok("No existen usuarios");
     }
 
-    private String getPassword()
-    {
-        while(datel>0)
-        {
-            finpr=inicio2+9;
-            ps= date.substring(inicio2,finpr);
-            if(ps.compareTo("Password=")==0)
-            {
-                finpr2=finpr+1;
-                while(ps.contains(")")==false)
-                {
-                    ps = date.substring(finpr,finpr2);
-                    finpr2=finpr2+1;
+    int cont = 0, cont2 = 1;
+
+    private void getUsPs() {
+
+            for (int i = 0; i < datel; i++) {
+                // Incrementamos el contador cada vez que encontremos un caracter
+                cont = cont + 1;
+                ps= date.substring(cont);
+                // Verificamos si el caracter actual es una coma
+                if (date.charAt(i) == ',') {
+                    // Si se encuentra una coma, salimos del ciclo
+                    break;
                 }
-                finpr2=finpr2-2;
-                ps = date.substring(finpr,finpr2);
-                return ps;
             }
+                us = date.substring(0, cont - 1);
 
-            else{
-                inicio2=inicio2+1;
+    }
+
+        @PostMapping
+        public ResponseEntity<Usuario> insertUsuario (@RequestBody Usuario usuario){
+            Usuario newUsuario = usuarioDAO.save(usuario);
+            return ResponseEntity.ok(newUsuario);
+        }
+
+        @PutMapping
+        public ResponseEntity<Usuario> updateUsuario (@RequestBody Usuario usuario){
+            Usuario upUsuario = usuarioDAO.save(usuario);
+            if (upUsuario != null) {
+                return ResponseEntity.ok(upUsuario);
+            } else {
+                return ResponseEntity.notFound().build();
             }
         }
-        return "NO HAY USUARIOS";
-    }
 
-
-
-    @PostMapping
-    public ResponseEntity<Usuario> insertUsuario(@RequestBody Usuario usuario) {
-        Usuario newUsuario = usuarioDAO.save(usuario);
-        return ResponseEntity.ok(newUsuario);
-    }
-
-    @PutMapping
-    public ResponseEntity<Usuario> updateUsuario(@RequestBody Usuario usuario) {
-        Usuario upUsuario = usuarioDAO.save(usuario);
-        if (upUsuario != null) {
-            return ResponseEntity.ok(upUsuario);
-        } else {
-            return ResponseEntity.notFound().build();
+        @DeleteMapping(value = "{id}")
+        public ResponseEntity<Usuario> deletePersons (@PathVariable("id") Long id){
+            usuarioDAO.deleteById(id);
+            return ResponseEntity.ok(null);
         }
-    }
 
-    @DeleteMapping(value = "{id}")
-    public ResponseEntity<Usuario> deletePersons(@PathVariable("id") Long id) {
-        usuarioDAO.deleteById(id);
-        return ResponseEntity.ok(null);
-    }
 
 }

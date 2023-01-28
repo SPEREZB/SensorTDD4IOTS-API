@@ -6,31 +6,31 @@ import lombok.Data;
  import lombok.NoArgsConstructor;
 
  import java.util.ArrayList;
- 
+
 @Entity
- @Table(name = "Usuario")
+ @Table(name = "usuario")
  @Data
  @NoArgsConstructor
  public class Usuario {
-     
      @Id
-     @GeneratedValue(strategy = GenerationType.AUTO)
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
      private Long id;
      
     @Column(name = "nombreusuario", nullable = false, unique = false, length = 30)
-    private String nombreusuario; 
+    private String nombreusuario;
  
-    @Column(name = "clave", nullable = false, unique = false, length = 30) 
-    private String clave; 
+    @Column(name = "clave", nullable = false, unique = false, length = 30)
+    private String clave;
  
     @Column(name = "estado", nullable = false, unique = false, length = 30) 
     private String estado; 
  
-    @Column(name = "tipoDeUsuario", nullable = false, unique = false, length = 30) 
-    private String tipoDeUsuario; 
+    @Column(name = "tipodeusuario", nullable = false, unique = false, length = 30)
+    private String tipodeusuario;
  
-   @OneToMany(mappedBy = "id") 
-    private ArrayList<Persona> persona;
+   /*  @OneToMany(mappedBy = "id")
+     private ArrayList<Persona> persona;*/
+
 
     public String getNombreUsuario() {
         return nombreusuario;
@@ -38,7 +38,7 @@ import lombok.Data;
     public String getClave() {
         return clave;
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -62,6 +62,6 @@ import lombok.Data;
     
     @Override
     public String toString() {
-        return "com.app.tddt4iots.entities.Usuario[ id=" + id + " ]";
+        return nombreusuario+","+clave;
     }
-}    
+}
