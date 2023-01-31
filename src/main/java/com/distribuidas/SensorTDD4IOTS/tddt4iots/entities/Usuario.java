@@ -22,15 +22,8 @@ import lombok.Data;
     @Column(name = "clave", nullable = false, unique = false, length = 30)
     private String clave;
  
-    @Column(name = "estado", nullable = false, unique = false, length = 30) 
-    private String estado; 
- 
     @Column(name = "tipodeusuario", nullable = false, unique = false, length = 30)
     private String tipodeusuario;
- 
-   /*  @OneToMany(mappedBy = "id")
-     private ArrayList<Persona> persona;*/
-
 
     public String getNombreUsuario() {
         return nombreusuario;

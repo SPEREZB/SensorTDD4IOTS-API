@@ -23,13 +23,7 @@ import java.util.Date;
      @Id
      @GeneratedValue(strategy = GenerationType.AUTO)
      private Long id;
-     
-    @Column(name = "id", nullable = false, unique = false, length = 30,insertable=false, updatable=false)
-    private String ids;
- 
-    @Column(name = "idpulsaciones", nullable = false, unique = false) 
-    private Integer idpulsaciones;
- 
+
     @Column(name = "cantpulsaciones", nullable = false, unique = false) 
     private Integer cantpulsaciones;
  
