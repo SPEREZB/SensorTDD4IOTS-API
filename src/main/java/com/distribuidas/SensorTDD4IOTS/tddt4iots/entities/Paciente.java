@@ -1,38 +1,19 @@
 package com.distribuidas.SensorTDD4IOTS.tddt4iots.entities;
-
-//import com.app.tddt4iots.enums.*;
 import lombok.Data;
- import lombok.NoArgsConstructor;
-
- import java.util.ArrayList;
+import lombok.NoArgsConstructor;
 import java.util.ArrayList;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.*;
-@Entity
+ @Entity
  @Table(name = "Paciente")
  @Data
  @NoArgsConstructor
  public class Paciente {
      
     @Id
-     @GeneratedValue(strategy = GenerationType.AUTO)
-     private Long id;
-     
-    @Column(name = "id", nullable = false, unique = false,insertable=false, updatable=false)
-    private Integer ids;
- 
-    @Column(name = "id1", nullable = false, unique = false) 
-    private Integer id1;
- 
-   @OneToMany(mappedBy = "id") 
-    private ArrayList<Persona> Persona; 
- 
-   @OneToMany(mappedBy = "id") 
-    private ArrayList<FrecuenciaCardiaca> FrecuenciaCardiaca; 
- 
-    
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     @Override
     public int hashCode() {
         final int prime = 31;

@@ -6,7 +6,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
  import lombok.NoArgsConstructor;
@@ -14,8 +13,8 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.Date;
 
-@Entity
- @Table(name = "FrecuenciaCardiaca")
+ @Entity
+ @Table(name = "frecuenciacardiaca")
  @Data
  @NoArgsConstructor
  public class FrecuenciaCardiaca {
@@ -30,13 +29,9 @@ import java.util.Date;
     @Column(name = "fechademedicion", nullable = false, unique = false) 
     private Date fechademedicion;
  
-    @Column(name = "riesgoDeInfarto", nullable = false, unique = false, length = 30) 
+    @Column(name = "riesgodeinfarto", nullable = false, unique = false, length = 30)
     private String riesgoDeInfarto; 
- 
-   @OneToMany(mappedBy = "id")
-    private ArrayList<FrecuenciaCardiaca> paciente;
- 
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;

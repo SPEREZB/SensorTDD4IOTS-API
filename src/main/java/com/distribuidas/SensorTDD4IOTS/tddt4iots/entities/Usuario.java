@@ -1,13 +1,11 @@
 package com.distribuidas.SensorTDD4IOTS.tddt4iots.entities;
- 
-//import com.app.tddt4iots.enums.*;
 import jakarta.persistence.*;
 import lombok.Data;
- import lombok.NoArgsConstructor;
+import lombok.NoArgsConstructor;
 
  import java.util.ArrayList;
 
-@Entity
+ @Entity
  @Table(name = "usuario")
  @Data
  @NoArgsConstructor

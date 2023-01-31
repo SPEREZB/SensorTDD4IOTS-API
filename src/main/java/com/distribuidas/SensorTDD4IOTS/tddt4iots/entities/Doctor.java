@@ -1,25 +1,22 @@
 package com.distribuidas.SensorTDD4IOTS.tddt4iots.entities;
-
-//import com.app.tddt4iots.enums.*;
 import lombok.Data;
- import lombok.NoArgsConstructor;
-
+import lombok.NoArgsConstructor;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import java.util.ArrayList;
  
-@Entity
+ @Entity
  @Table(name = "Doctor")
  @Data
  @NoArgsConstructor
  public class Doctor {
      
     @Id
-     @GeneratedValue(strategy = GenerationType.AUTO)
-     private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
      
-   @OneToMany(mappedBy = "id") 
+    @OneToMany(mappedBy = "id")
     private ArrayList<Persona> Persona; 
  
     
