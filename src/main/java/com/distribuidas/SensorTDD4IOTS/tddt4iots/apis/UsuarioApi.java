@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@CrossOrigin(origins="http://localhost:4200/")
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioApi {
@@ -17,6 +18,7 @@ public class UsuarioApi {
 
     @Autowired
     private UsuarioService usuarioService;
+
     @GetMapping
     public ResponseEntity<List<Usuario>> getUsuario() {
         List<Usuario> listUsuario = usuarioDAO.findAll();
