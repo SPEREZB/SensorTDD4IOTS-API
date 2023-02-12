@@ -4,6 +4,7 @@ import com.distribuidas.SensorTDD4IOTS.tddt4iots.dao.UsuarioDao;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Usuario;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -21,7 +22,14 @@ public class UsuarioApi {
 
     @GetMapping
     public ResponseEntity<List<Usuario>> getUsuario() {
-        List<Usuario> listUsuario = usuarioDAO.findAll();
+        return new ResponseEntity<>(usuarioService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/prueba/")
+    public ResponseEntity<List<Usuario>> getUsuario(@RequestParam(defaultValue = "0") Integer pageNo,
+                                                    @RequestParam(defaultValue = "10") Integer pageSize,
+                                                    @RequestParam(defaultValue = "id") String sortBy) {
+        List<Usuario> listUsuario = usuarioService.getAllUsuarios(pageNo, pageSize, sortBy);
         return ResponseEntity.ok(listUsuario);
     }
 
