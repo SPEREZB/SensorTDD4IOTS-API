@@ -14,7 +14,16 @@ import jakarta.persistence.*;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Override
+
+     @Column(name = "altura", nullable = false, unique = false, length = 30)
+     private String altura;
+
+     @Column(name = "peso", nullable = false, unique = false, length = 30)
+     private String peso;
+
+     @Column(name = "gruposanguineo", nullable = false, unique = false, length = 30)
+     private String gruposanguineo;
+     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
