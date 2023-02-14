@@ -29,10 +29,7 @@ import jakarta.persistence.*;
  
     @Column(name = "numeroDeTelefono", nullable = false, unique = false, length = 30) 
     private String numeroDeTelefono; 
- 
-    @Column(name = "email", nullable = false, unique = false, length = 30) 
-    private String email; 
- 
+
    @OneToMany(mappedBy = "id") 
     private ArrayList<Paciente> paciente; 
  
