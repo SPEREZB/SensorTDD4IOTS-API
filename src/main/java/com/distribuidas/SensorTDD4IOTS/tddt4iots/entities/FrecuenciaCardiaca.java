@@ -26,10 +26,10 @@ import java.util.Date;
     @Column(name = "cantpulsaciones", nullable = false, unique = false) 
     private Integer cantpulsaciones;
  
-    @Column(name = "fechademedicion", nullable = false, unique = false) 
-    private Date fechademedicion;
+    @Column(name = "fechademedicion", nullable = false, unique = false)
+    private String fechademedicion;
  
-    @Column(name = "riesgodeinfarto", nullable = false, unique = false, length = 30)
+    @Column(name = "riesgoDeInfarto", nullable = false, unique = false, length = 30)
     private String riesgoDeInfarto; 
 
     @Override

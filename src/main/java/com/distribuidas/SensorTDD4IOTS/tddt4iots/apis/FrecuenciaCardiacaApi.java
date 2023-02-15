@@ -1,7 +1,11 @@
 package com.distribuidas.SensorTDD4IOTS.tddt4iots.apis;
 
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dao.FrecuenciaCardiacaDao;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.FrecuenciaCardiacaDTO;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.UsuarioDTO;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.FrecuenciaCardiaca;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.FrecuenciaCardiacaServiceAPI;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.UsuarioServiceAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +21,17 @@ public class FrecuenciaCardiacaApi {
     @Autowired
     private FrecuenciaCardiacaDao frecuenciacardiacaDAO;
 
+    @Autowired
+    private FrecuenciaCardiacaServiceAPI frecApiServiceAPI;
     @GetMapping
     public ResponseEntity<List<FrecuenciaCardiaca>> getFrecuenciaCardiaca() {
         List<FrecuenciaCardiaca> listFrecuenciaCardiaca = frecuenciacardiacaDAO.findAll();
         return ResponseEntity.ok(listFrecuenciaCardiaca);
+    }
+
+    @GetMapping(value = "/all")
+    public List<FrecuenciaCardiacaDTO> getAll() throws Exception {
+        return frecApiServiceAPI.getAll();
     }
 
     @PostMapping

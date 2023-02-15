@@ -22,11 +22,11 @@ public class UsuarioApi {
     private UsuarioService usuarioService;
 
     @Autowired
-    private UsuarioServiceAPI personaServiceAPI;
+    private UsuarioServiceAPI usuarioServiceAPI;
 
     @GetMapping(value = "/all")
     public List<UsuarioDTO> getAll() throws Exception {
-        return personaServiceAPI.getAll();
+        return usuarioServiceAPI.getAll();
     }
 
     @GetMapping
