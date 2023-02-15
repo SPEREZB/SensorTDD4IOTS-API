@@ -7,7 +7,15 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.0.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
+
 	</parent>
+
+	<repositories>
+		<repository>
+			<id>google-maven</id>
+			<url>https://maven.google.com</url>
+		</repository>
+	</repositories>
 	<groupId>com.distribuidas</groupId>
 	<artifactId>SensorTDD4IOTS</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -47,6 +55,16 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>6.11.0</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -1,10 +1,11 @@
 package com.distribuidas.SensorTDD4IOTS.tddt4iots.apis;
 
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dao.UsuarioDao;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.UsuarioDTO;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Usuario;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.UsuarioService;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.UsuarioServiceAPI;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -20,20 +21,19 @@ public class UsuarioApi {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private UsuarioServiceAPI personaServiceAPI;
+
+    @GetMapping(value = "/all")
+    public List<UsuarioDTO> getAll() throws Exception {
+        return personaServiceAPI.getAll();
+    }
+
     @GetMapping
     public ResponseEntity<List<Usuario>> getUsuario() {
-        return new ResponseEntity<>(usuarioService.findAll(), HttpStatus.OK);
-    }
-
-    @GetMapping("/prueba/")
-    public ResponseEntity<List<Usuario>> getUsuario(@RequestParam(defaultValue = "0") Integer pageNo,
-                                                    @RequestParam(defaultValue = "10") Integer pageSize,
-                                                    @RequestParam(defaultValue = "id") String sortBy) {
-        List<Usuario> listUsuario = usuarioService.getAllUsuarios(pageNo, pageSize, sortBy);
+        List<Usuario> listUsuario = usuarioDAO.findAll();
         return ResponseEntity.ok(listUsuario);
     }
-
-
     String date, us, ps;
     int index = 0, datel, cantidad = 0,cont = 0;
     @PostMapping("/VerificarUsuarios/")

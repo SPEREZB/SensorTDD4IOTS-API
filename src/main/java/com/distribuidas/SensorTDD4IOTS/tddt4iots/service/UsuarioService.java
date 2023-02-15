@@ -2,7 +2,6 @@ package com.distribuidas.SensorTDD4IOTS.tddt4iots.service;
 
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dao.UsuarioDao;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Usuario;
-import com.distribuidas.SensorTDD4IOTS.tddt4iots.data.UsuarioDt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,50 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioService implements UsuarioDt{
-    @Autowired
-    private UsuarioDao usuarioDao;
-
-    public List<Usuario> getAllUsuarios(Integer pageNo, Integer pageSize, String sortBy)
-    {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-
-        Page<Usuario> pagedResult = usuarioDao.findAll(paging);
-
-
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<Usuario>();
-        }
-    }
-    @Override
-    public Usuario create(Usuario usuario) {
-        return usuarioDao.save(usuario);
-    }
-
-    @Override
-    public Usuario update(Usuario usuario) {
-        return usuarioDao.save(usuario);
-    }
-
-    @Override
-    public Usuario findById(Long idUsuario) {
-        Optional<Usuario> usuario=usuarioDao.findById(idUsuario);
-        return usuario.orElse(null);
-    }
-
-    @Override
-    public List<Usuario> findAll() {
-        return usuarioDao.findAll();
-    }
-
-    @Override
-    public void delete(Long idUsuario) {
-        usuarioDao.deleteById(idUsuario);
-    }
-
-
+public class UsuarioService{
     public ResponseEntity<String> getUsPs(String date,int datel,int cantidad,int cont, int index,@RequestBody Usuario usuario)
     {
          String us="",ps="";
