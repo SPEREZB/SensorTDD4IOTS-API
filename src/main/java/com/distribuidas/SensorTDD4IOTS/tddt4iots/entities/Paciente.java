@@ -23,6 +23,9 @@ import jakarta.persistence.*;
 
      @Column(name = "gruposanguineo", nullable = false, unique = false, length = 30)
      private String gruposanguineo;
+
+     @Column(name = "audio", nullable = false, unique = false, length = 30)
+     private String audio;
      @Override
     public int hashCode() {
         final int prime = 31;

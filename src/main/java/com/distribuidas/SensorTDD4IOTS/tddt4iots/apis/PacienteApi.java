@@ -1,8 +1,12 @@
 package com.distribuidas.SensorTDD4IOTS.tddt4iots.apis;
 
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dao.PacienteDao;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.PacienteDTO;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.UsuarioDTO;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Paciente;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.AWSS3Service;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.PacienteServiceAPI;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -21,6 +25,8 @@ public class PacienteApi {
 
     @Autowired
     private PacienteDao pacienteDAO;
+    @Autowired
+    private PacienteServiceAPI pacienteServiceAPI;
 
     @Autowired
     private AWSS3Service awss3Service;
@@ -29,6 +35,10 @@ public class PacienteApi {
     public ResponseEntity<List<Paciente>> getPaciente() {
         List<Paciente> listPaciente = pacienteDAO.findAll();
         return ResponseEntity.ok(listPaciente);
+    }
+    @GetMapping(value = "/all")
+    public List<PacienteDTO> getAll() throws Exception {
+        return pacienteServiceAPI.getAll();
     }
 
     @PostMapping(value = "/audio")

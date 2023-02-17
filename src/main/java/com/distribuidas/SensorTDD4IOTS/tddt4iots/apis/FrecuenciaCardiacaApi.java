@@ -22,7 +22,7 @@ public class FrecuenciaCardiacaApi {
     private FrecuenciaCardiacaDao frecuenciacardiacaDAO;
 
     @Autowired
-    private FrecuenciaCardiacaServiceAPI frecApiServiceAPI;
+    private FrecuenciaCardiacaServiceAPI frecServiceAPI;
     @GetMapping
     public ResponseEntity<List<FrecuenciaCardiaca>> getFrecuenciaCardiaca() {
         List<FrecuenciaCardiaca> listFrecuenciaCardiaca = frecuenciacardiacaDAO.findAll();
@@ -31,7 +31,7 @@ public class FrecuenciaCardiacaApi {
 
     @GetMapping(value = "/all")
     public List<FrecuenciaCardiacaDTO> getAll() throws Exception {
-        return frecApiServiceAPI.getAll();
+        return frecServiceAPI.getAll();
     }
 
     @PostMapping
