@@ -6,7 +6,6 @@ import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.UsuarioDTO;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Paciente;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.AWSS3Service;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.PacienteServiceAPI;
-import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;

@@ -3,7 +3,6 @@ package com.distribuidas.SensorTDD4IOTS.tddt4iots.apis;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dao.UsuarioDao;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.UsuarioDTO;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Usuario;
-import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.UsuarioService;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.UsuarioServiceAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +18,6 @@ public class UsuarioApi {
     private UsuarioDao usuarioDAO;
 
     @Autowired
-    private UsuarioService usuarioService;
-
-    @Autowired
     private UsuarioServiceAPI usuarioServiceAPI;
 
     @GetMapping(value = "/all")
@@ -35,16 +31,33 @@ public class UsuarioApi {
         return ResponseEntity.ok(listUsuario);
     }
     String date, us, ps;
-    int index = 0, datel, cantidad = 0,cont = 0;
+    int index = 0, datel, cantidad = 0,comp=0,cont = 0;
+    List<UsuarioDTO> dto;
+
     @PostMapping("/VerificarUsuarios/")
-    public ResponseEntity<?> login(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO) throws Exception {
 // Comprobar si el nombre de usuario y la contraseña son correctos
 
-        cantidad = getUsuario().getBody().size();
+        cantidad = getAll().size();
+        dto= getAll();
+        comp=cantidad;
         while (cantidad > 0) {
-            date = getUsuario().getBody().get(index).toString();
-            datel = date.length();
-            return usuarioService.getUsPs(date,datel,cantidad,cont,index,usuario);
+            us=dto.get(index).getNombreusuario().toString();
+            ps=dto.get(index).getClave().toString();
+            cantidad--;
+
+            if (usuarioDTO.getNombreusuario().equals(us) && usuarioDTO.getClave().equals(ps)) {
+                cont = 0;
+                index = 0;
+                return ResponseEntity.ok("Login exitoso");
+            } else {
+                index = index + 1;
+                if(index>comp){
+                    cont = 0;
+                    index = 0;
+                    return ResponseEntity.ok("Nombre de usuario o contraseña incorrectos");
+                }
+            }
         }
         return ResponseEntity.ok("No existen usuarios");
     }
