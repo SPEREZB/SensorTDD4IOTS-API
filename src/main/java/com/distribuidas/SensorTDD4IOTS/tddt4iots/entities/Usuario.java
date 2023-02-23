@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
      @GeneratedValue(strategy = GenerationType.IDENTITY)
      private Long id;
      
-    @Column(name = "nombreusuario", nullable = false, unique = false, length = 30)
-    private String nombreusuario;
+    @Column(name = "nombreUsuario", nullable = false, unique = false, length = 30)
+    private String nombreUsuario;
  
     @Column(name = "clave", nullable = false, unique = false, length = 30)
     private String clave;
@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
     private String tipodeusuario;
 
     public String getNombreUsuario() {
-        return nombreusuario;
+        return nombreUsuario;
     }
     public String getClave() {
         return clave;
@@ -53,6 +53,6 @@ import lombok.NoArgsConstructor;
     
     @Override
     public String toString() {
-        return nombreusuario+","+clave;
+        return nombreUsuario+","+clave;
     }
 }

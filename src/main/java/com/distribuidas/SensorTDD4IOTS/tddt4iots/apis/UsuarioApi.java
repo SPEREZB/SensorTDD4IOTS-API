@@ -5,6 +5,7 @@ import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.UsuarioDTO;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Usuario;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.UsuarioServiceAPI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -24,6 +25,10 @@ public class UsuarioApi {
     public List<UsuarioDTO> getAll() throws Exception {
         return usuarioServiceAPI.getAll();
     }
+    @PostMapping(value = "/post")
+    public ResponseEntity<String> save(@RequestBody Usuario usuario) throws Exception{
+        return new ResponseEntity<String>(usuarioServiceAPI.save(usuario), HttpStatus.OK);
+    }
 
     @GetMapping
     public ResponseEntity<List<Usuario>> getUsuario() {
@@ -35,12 +40,14 @@ public class UsuarioApi {
     List<UsuarioDTO> dto;
 
     @PostMapping("/VerificarUsuarios/")
-    public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO) throws Exception {
+    @ResponseBody
+    public ResponseEntity<Boolean> login(@RequestBody UsuarioDTO usuarioDTO) throws Exception {
 // Comprobar si el nombre de usuario y la contraseña son correctos
 
         cantidad = getAll().size();
         dto= getAll();
         comp=cantidad;
+        index = 0;
         while (cantidad > 0) {
             us=dto.get(index).getNombreusuario().toString();
             ps=dto.get(index).getClave().toString();
@@ -49,17 +56,17 @@ public class UsuarioApi {
             if (usuarioDTO.getNombreusuario().equals(us) && usuarioDTO.getClave().equals(ps)) {
                 cont = 0;
                 index = 0;
-                return ResponseEntity.ok("Login exitoso");
+                return ResponseEntity.ok(true);
             } else {
                 index = index + 1;
                 if(index>comp){
                     cont = 0;
                     index = 0;
-                    return ResponseEntity.ok("Nombre de usuario o contraseña incorrectos");
+                    return ResponseEntity.ok(false);
                 }
             }
         }
-        return ResponseEntity.ok("No existen usuarios");
+        return ResponseEntity.ok(false);
     }
 
         @PostMapping

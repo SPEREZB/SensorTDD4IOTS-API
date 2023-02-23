@@ -18,9 +18,9 @@ import java.util.Date;
  @Data
  @NoArgsConstructor
  public class FrecuenciaCardiaca {
-     
+
      @Id
-     @GeneratedValue(strategy = GenerationType.AUTO)
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
      private Long id;
 
     @Column(name = "cantpulsaciones", nullable = false, unique = false) 
@@ -28,10 +28,15 @@ import java.util.Date;
  
     @Column(name = "fechademedicion", nullable = false, unique = false)
     private String fechademedicion;
- 
-    @Column(name = "riesgoDeInfarto", nullable = false, unique = false, length = 30)
-    private String riesgoDeInfarto; 
 
+    @Column(name = "riesgoDeInfarto", nullable = false, unique = false, length = 30)
+    private String riesgoDeInfarto;
+
+
+     public FrecuenciaCardiaca(int cantpulsaciones, String fechademedicion) {
+         this.cantpulsaciones = cantpulsaciones;
+         this.fechademedicion = fechademedicion;
+     }
     @Override
     public int hashCode() {
         final int prime = 31;

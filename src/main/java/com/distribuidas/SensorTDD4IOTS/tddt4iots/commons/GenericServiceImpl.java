@@ -46,12 +46,14 @@ public abstract class GenericServiceImpl<I, O> implements GenericServiceAPI<I, O
 
 	@Override
 	public O get(String id) throws Exception {
+		List<O> result = new ArrayList<O>();
 		DocumentReference ref = getCollection().document(id);
 		ApiFuture<DocumentSnapshot> futureDoc = ref.get();
 		DocumentSnapshot document = futureDoc.get();
 		if (document.exists()) {
 			O object = document.toObject(clazz);
 			PropertyUtils.setProperty(object, "id", document.getId());
+			result.add(object);
 			return object;
 		}
 		return null;
