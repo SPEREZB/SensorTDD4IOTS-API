@@ -2,9 +2,7 @@ package com.distribuidas.SensorTDD4IOTS.tddt4iots.apis;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dao.FrecuenciaCardiacaDao;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.FrecuenciaCardiacaDTO;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.FrecuenciaCardiaca;
-import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Usuario;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.FrecuenciaCardiacaServiceAPI;
-import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.UsuarioServiceAPI;
 import com.google.firebase.database.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +21,8 @@ public class FrecuenciaCardiacaApi {
 
     @Autowired
     private FrecuenciaCardiacaServiceAPI frecServiceAPI;
+    @Autowired
+    private UsuarioApi usAPI;
 
     @GetMapping
     public ResponseEntity<List<FrecuenciaCardiaca>> getFrecuenciaCardiaca() {
@@ -38,10 +38,11 @@ public class FrecuenciaCardiacaApi {
     public FrecuenciaCardiacaDTO find(@PathVariable String id) throws Exception {
         return frecServiceAPI.get(id);
     }
-
+    List<FrecuenciaCardiaca> resultados = new ArrayList<>();
+    //TODO ESTO ES PARA OBTENER LOS DATOS DE LAS FRECUENCIAS CARDIACAS SEGUN EL PACIENTE
     @GetMapping("/getData")
-    public String getData() {
-        List<Object> resultados = new ArrayList<>();
+    public List<FrecuenciaCardiaca> getData() {
+
         FirebaseDatabase.getInstance().getReference("Dispositivos/-1111/Datos/Emergencia").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -49,18 +50,38 @@ public class FrecuenciaCardiacaApi {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                       // String key = snapshot.getKey();
                         //Long id= Long.parseLong(key);
+                        String key = snapshot.getKey();
+                        Integer cont=0;
                         Object cantpulsaciones =  snapshot.child("Bpm").getValue();
                         String fechademedicion =  snapshot.child("Fecha").getValue().toString();
-
-                        FrecuenciaCardiaca frec = new FrecuenciaCardiaca(Integer.parseInt(cantpulsaciones.toString()), fechademedicion);
-                        // Enviar el objeto Usuario al método save de UsuarioServiceAPI
+                        List<FrecuenciaCardiacaDTO> datos;
                         try {
-                            frecServiceAPI.save(frec);
+                          datos = getAll();
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
+                        for (int i=0; i< datos.size();i++)
+                        {
+                            if(key.equals(datos.get(i).getIdrt()))
+                            {
+                              cont=1;
+                            }
+
+                        }
+                        if(cont==1)
+                        {
+                            FrecuenciaCardiaca frec = new FrecuenciaCardiaca(key,Integer.parseInt(cantpulsaciones.toString()), fechademedicion,"NO");
+                            // Enviar el objeto Usuario al método save de UsuarioServiceAPI
+                            try {
+                                frecServiceAPI.save(frec);
+                                resultados.add(new FrecuenciaCardiaca(67));
+                                break;
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+
                     }
                 }
             }
@@ -70,12 +91,18 @@ public class FrecuenciaCardiacaApi {
                 // Aquí es donde se manejan los errores.
             }
         });
-        return "";
+        return resultados;
     }
+
+    @GetMapping("/getResul")
+    public List<FrecuenciaCardiaca> getResultado(){
+        return resultados;
+    }
+/*
     @PostMapping(value = "/post")
     public ResponseEntity<String> save(@RequestBody FrecuenciaCardiaca frec) throws Exception{
         return new ResponseEntity<String>(frecServiceAPI.save(frec), HttpStatus.OK);
-    }
+    }*/
 
     @PostMapping
     public ResponseEntity<FrecuenciaCardiaca> insertFrecuenciaCardiaca(@RequestBody FrecuenciaCardiaca frecuenciacardiaca) {

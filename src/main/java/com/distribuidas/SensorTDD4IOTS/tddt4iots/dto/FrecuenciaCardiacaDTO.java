@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class FrecuenciaCardiacaDTO {
     private String id;
+    private String idrt;
+    private String idus;
     private Integer cantpulsaciones;
     private String fechademedicion;
     private String riesgoDeInfarto;
@@ -14,6 +16,20 @@ public class FrecuenciaCardiacaDTO {
 
     public void setId(String id) {
         this.id = id;
+    }
+    public String getIdus() {
+        return idus;
+    }
+
+    public void setIdus(String idus) {
+        this.idus = idus;
+    }
+    public String getIdrt() {
+        return idrt;
+    }
+
+    public void setIdrt(String idrt) {
+        this.idrt = idrt;
     }
 
     public Integer getCantpulsaciones() {

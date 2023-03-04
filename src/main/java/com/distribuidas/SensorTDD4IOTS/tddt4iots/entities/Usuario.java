@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
     @Column(name = "clave", nullable = false, unique = false, length = 30)
     private String clave;
  
-    @Column(name = "tipodeusuario", nullable = false, unique = false, length = 30)
+    @Column(name = "tipoDeUsuario", nullable = false, unique = false, length = 30)
     private String tipodeusuario;
 
     public String getNombreUsuario() {

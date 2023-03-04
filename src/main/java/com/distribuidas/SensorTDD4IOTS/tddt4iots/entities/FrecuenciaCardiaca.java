@@ -20,9 +20,13 @@ import java.util.Date;
  public class FrecuenciaCardiaca {
 
      @Id
-     @GeneratedValue(strategy = GenerationType.IDENTITY)
-     private Long id;
+     @GeneratedValue(strategy = GenerationType.AUTO)
+     private String id;
 
+     @Column(name = "idrt", nullable = false, unique = false)
+     private String idrt;
+     @Column(name = "idus", nullable = false, unique = false)
+     private String idus;
     @Column(name = "cantpulsaciones", nullable = false, unique = false) 
     private Integer cantpulsaciones;
  
@@ -33,9 +37,14 @@ import java.util.Date;
     private String riesgoDeInfarto;
 
 
-     public FrecuenciaCardiaca(int cantpulsaciones, String fechademedicion) {
+     public FrecuenciaCardiaca(String idrt,int cantpulsaciones, String fechademedicion,String riesgo) {
+         this.idrt = idrt;
          this.cantpulsaciones = cantpulsaciones;
          this.fechademedicion = fechademedicion;
+         this.riesgoDeInfarto = riesgo;
+     }
+     public FrecuenciaCardiaca(int cantpulsaciones) {
+         this.cantpulsaciones = cantpulsaciones;
      }
     @Override
     public int hashCode() {
