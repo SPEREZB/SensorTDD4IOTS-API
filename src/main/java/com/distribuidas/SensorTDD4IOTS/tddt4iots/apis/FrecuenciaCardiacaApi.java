@@ -7,6 +7,8 @@ import com.google.firebase.database.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -38,61 +40,112 @@ public class FrecuenciaCardiacaApi {
     public FrecuenciaCardiacaDTO find(@PathVariable String id) throws Exception {
         return frecServiceAPI.get(id);
     }
+
+    //PRUEBA PARA WEBSOCKET
+    @MessageMapping("/hello")
+    @SendTo("/topic/greetings")
+    public String greeting(String message) throws Exception {
+        Thread.sleep(1000); // simulated delay
+        return "HOLAAA "+message;
+    }
+
+
+
+
     List<FrecuenciaCardiaca> resultados = new ArrayList<>();
+
+
+
     //TODO ESTO ES PARA OBTENER LOS DATOS DE LAS FRECUENCIAS CARDIACAS SEGUN EL PACIENTE
     @GetMapping("/getData")
     public List<FrecuenciaCardiaca> getData() {
-
-        FirebaseDatabase.getInstance().getReference("Dispositivos/-1111/Datos/Emergencia").addValueEventListener(new ValueEventListener() {
+        // Primero, obtenga una referencia a la base de datos de Firebase:
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        // Ahora obtenga una referencia a la colección que desea consultar:
+        DatabaseReference myRef = db.getReference("Dispositivos/-1111/Datos/Historial");
+       // Ahora cree un objeto de consulta:
+        Query query = myRef.orderByKey().limitToLast(1);
+       // Finalmente, obtenga los datos de forma síncrona:
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Aquí es donde puedes recuperar los datos almacenados en la ubicación "usuarios".
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                        //Long id= Long.parseLong(key);
+                long lastIndex = dataSnapshot.getChildrenCount() -1;
+                int count = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
                         String key = snapshot.getKey();
-                        Integer cont=0;
-                        Object cantpulsaciones =  snapshot.child("Bpm").getValue();
-                        String fechademedicion =  snapshot.child("Fecha").getValue().toString();
-                        List<FrecuenciaCardiacaDTO> datos;
+                        Integer cont = 0;
+                        Object cantpulsaciones = snapshot.child("Bpm").getValue();
+                        String fechademedicion = snapshot.child("Fecha").getValue().toString();
+
+                        FrecuenciaCardiaca frec = new FrecuenciaCardiaca(key, Integer.parseInt(cantpulsaciones.toString()), fechademedicion, "NO");
+
                         try {
-                          datos = getAll();
+                            resultados.add(frec);
+
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
-                        for (int i=0; i< datos.size();i++)
-                        {
-                            if(key.equals(datos.get(i).getIdrt()))
-                            {
-                              cont=1;
-                            }
-
-                        }
-                        if(cont==1)
-                        {
-                            FrecuenciaCardiaca frec = new FrecuenciaCardiaca(key,Integer.parseInt(cantpulsaciones.toString()), fechademedicion,"NO");
-                            // Enviar el objeto Usuario al método save de UsuarioServiceAPI
-                            try {
-                                frecServiceAPI.save(frec);
-                                resultados.add(new FrecuenciaCardiaca(67));
-                                break;
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-
                     }
-                }
+
+
             }
 
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return resultados;
+    }
+
+    //PARA LA APP MOVIL
+    FrecuenciaCardiaca frec = new FrecuenciaCardiaca();
+    @GetMapping("/getDataMovil")
+    public FrecuenciaCardiaca getDataMovil() {
+
+        // Primero, obtenga una referencia a la base de datos de Firebase:
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+
+        // Ahora obtenga una referencia a la colección que desea consultar:
+        DatabaseReference myRef = db.getReference("Dispositivos/-1111/Datos/Historial");
+
+        // Ahora cree un objeto de consulta:
+        Query query = myRef.orderByKey().limitToLast(1);
+
+        // Finalmente, obtenga los datos de forma síncrona:
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                long lastIndex = dataSnapshot.getChildrenCount() -1;
+                int count = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                    String key = snapshot.getKey();
+                    Integer cont = 0;
+                    Object cantpulsaciones = snapshot.child("Bpm").getValue();
+                    String fechademedicion = snapshot.child("Fecha").getValue().toString();
+                    List<FrecuenciaCardiacaDTO> datos;
+
+
+                   frec = new FrecuenciaCardiaca(key, Integer.parseInt(cantpulsaciones.toString()), fechademedicion, "NO");
+
+                }
+
+
+            }
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 // Aquí es donde se manejan los errores.
             }
         });
-        return resultados;
+        return frec;
     }
+
+
 
     @GetMapping("/getResul")
     public List<FrecuenciaCardiaca> getResultado(){

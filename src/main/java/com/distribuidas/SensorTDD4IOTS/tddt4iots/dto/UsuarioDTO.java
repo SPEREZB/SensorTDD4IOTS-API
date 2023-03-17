@@ -6,7 +6,6 @@ public class UsuarioDTO {
     private String id;
     private String nombreusuario;
     private String clave;
-    private String tipoDeUsuario;
 
     public String getId() {
         return id;
@@ -32,12 +31,5 @@ public class UsuarioDTO {
         this.clave = clave;
     }
 
-    public String getTipoDeUsuario() {
-        return tipoDeUsuario;
-    }
-
-    public void setTipoDeUsuario(String tipodeusuario) {
-        this.tipoDeUsuario = tipodeusuario;
-    }
 
 }

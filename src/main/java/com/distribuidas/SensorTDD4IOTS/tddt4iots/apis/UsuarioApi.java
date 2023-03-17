@@ -60,7 +60,7 @@ public class UsuarioApi {
             cantidad--;
 
             if (usuarioDTO.getNombreusuario().equals(us) && usuarioDTO.getClave().equals(ps)) {
-                usuarioDTO.getTipoDeUsuario();
+
                 cont = 0;
                 index = 0;
                 return ResponseEntity.ok(true);
@@ -106,34 +106,6 @@ public class UsuarioApi {
         return false;
     }
 
-    @PostMapping("/tipous/")
-    @ResponseBody
-    public ResponseEntity<String> tipous(@RequestBody UsuarioDTO usuarioDTO) throws Exception
-    {
-        cantidad = getAll().size();
-        dto= getAll();
-        comp=cantidad;
-        index = 0;
-        while (cantidad > 0) {
-            us=dto.get(index).getNombreusuario().toString();
-            ps=dto.get(index).getClave().toString();
-            cantidad--;
-
-            if (usuarioDTO.getNombreusuario().equals(us) && usuarioDTO.getClave().equals(ps)) {
-
-                cont = 0;
-                return  ResponseEntity.ok(dto.get(index).getTipoDeUsuario());
-            } else {
-                index = index + 1;
-                if(index>comp){
-                    cont = 0;
-                    index = 0;
-                    return null;
-                }
-            }
-        }
-        return null;
-    }
 
     @PostMapping
         public ResponseEntity<Usuario> insertUsuario (@RequestBody Usuario usuario){
