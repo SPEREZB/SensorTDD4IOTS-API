@@ -2,7 +2,10 @@ package com.distribuidas.SensorTDD4IOTS.tddt4iots.apis;
 
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dao.PersonaDao;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Persona;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Usuario;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.PersonaServiceAPI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +17,8 @@ import java.util.Optional;
 @RequestMapping("/persona")
 public class PersonaApi {
 
+    @Autowired
+    private PersonaServiceAPI personaServiceAPI;
     @Autowired
     private PersonaDao personaDAO;
 
@@ -27,6 +32,11 @@ public class PersonaApi {
     public ResponseEntity<Persona> insertPersona(@RequestBody Persona persona) {
         Persona newPersona = personaDAO.save(persona);
         return ResponseEntity.ok(newPersona);
+    }
+
+    @PostMapping(value = "/post")
+    public ResponseEntity<String> save(@RequestBody Persona persona) throws Exception{
+        return new ResponseEntity<String>(personaServiceAPI.save(persona), HttpStatus.OK);
     }
 
     @PutMapping

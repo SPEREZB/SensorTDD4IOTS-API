@@ -25,18 +25,5 @@ public class firebaseconfig {
         FirebaseApp firebaseApp= FirebaseApp.initializeApp(options);
           return FirestoreClient.getFirestore(firebaseApp);
     }
-/*
-    @Bean
-    public FirebaseDatabase firebaseDatabase() throws Exception{
-        FileInputStream serviceAccount = new FileInputStream("./sensortdd4iots-firebase-adminsdk-jydbk-10ca9f6037.json");
 
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl("https://sensortdd4iots-default-rtdb.firebaseio.com/")
-                .build();
-
-        FirebaseApp.initializeApp(options);
-
-        return FirebaseDatabase.getInstance();
-    }*/
 }
