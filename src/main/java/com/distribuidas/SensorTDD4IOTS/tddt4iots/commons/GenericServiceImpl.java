@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.FrecuenciaCardiaca;
 import org.apache.commons.beanutils.PropertyUtils;
 
 import com.google.api.core.ApiFuture;
@@ -73,6 +74,7 @@ public abstract class GenericServiceImpl<I, O> implements GenericServiceAPI<I, O
 		}
 		return result;
 	}
+
 
 	@Override
 	public Map<String, Object> getAsMap(String id) throws Exception {

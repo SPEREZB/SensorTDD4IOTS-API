@@ -4,6 +4,7 @@ import com.distribuidas.SensorTDD4IOTS.tddt4iots.dao.PacienteDao;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.PacienteDTO;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.UsuarioDTO;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Paciente;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Persona;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.AWSS3Service;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.PacienteServiceAPI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,10 @@ public class PacienteApi {
     public ResponseEntity<Paciente> insertPaciente(@RequestBody Paciente paciente) {
         Paciente newPaciente = pacienteDAO.save(paciente);
         return ResponseEntity.ok(newPaciente);
+    }
+    @PostMapping(value = "/post")
+    public ResponseEntity<String> save(@RequestBody Paciente Paciente) throws Exception{
+        return new ResponseEntity<String>(pacienteServiceAPI.save(Paciente), HttpStatus.OK);
     }
 
     @PutMapping

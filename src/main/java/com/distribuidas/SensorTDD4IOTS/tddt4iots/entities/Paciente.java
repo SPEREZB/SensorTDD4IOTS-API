@@ -11,9 +11,9 @@ import jakarta.persistence.*;
  @NoArgsConstructor
  public class Paciente {
      
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+     @Id
+     @GeneratedValue(strategy = GenerationType.AUTO)
+     private Long id;
 
      @Column(name = "altura", nullable = false, unique = false, length = 30)
      private String altura;
@@ -24,8 +24,7 @@ import jakarta.persistence.*;
      @Column(name = "gruposanguineo", nullable = false, unique = false, length = 30)
      private String gruposanguineo;
 
-     @Column(name = "audio", nullable = false, unique = false, length = 30)
-     private String audio;
+
      @Override
     public int hashCode() {
         final int prime = 31;

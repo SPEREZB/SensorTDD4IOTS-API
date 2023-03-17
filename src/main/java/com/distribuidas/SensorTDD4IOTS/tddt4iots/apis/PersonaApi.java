@@ -1,6 +1,8 @@
 package com.distribuidas.SensorTDD4IOTS.tddt4iots.apis;
 
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dao.PersonaDao;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.PersonaDTO;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.UsuarioDTO;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Persona;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Usuario;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.PersonaServiceAPI;
@@ -26,6 +28,10 @@ public class PersonaApi {
     public ResponseEntity<List<Persona>> getPersona() {
         List<Persona> listPersona = personaDAO.findAll();
         return ResponseEntity.ok(listPersona);
+    }
+    @GetMapping(value = "/all")
+    public List<PersonaDTO> getAll() throws Exception {
+        return personaServiceAPI.getAll();
     }
 
     @PostMapping

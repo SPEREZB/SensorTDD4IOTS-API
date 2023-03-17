@@ -13,11 +13,11 @@ import jakarta.persistence.*;
  @Data
  @NoArgsConstructor
  public class Persona {
-     
-    @Id
+
+     @Id
      @GeneratedValue(strategy = GenerationType.AUTO)
      private Long id;
-     
+
     @Column(name = "nombre", nullable = false, unique = false, length = 30) 
     private String nombre; 
  
@@ -25,19 +25,21 @@ import jakarta.persistence.*;
     private String apellido; 
  
     @Column(name = "genero", nullable = false, unique = false, length = 30) 
-    private String genero; 
- 
+    private String genero;
+    @Column(name = "edad", nullable = false, unique = false, length = 30)
+    private Integer edad;
+
     @Column(name = "numeroDeTelefono", nullable = false, unique = false, length = 30) 
     private String numeroDeTelefono; 
 
-   @OneToMany(mappedBy = "id") 
+   /*@OneToMany(mappedBy = "id")
     private ArrayList<Paciente> paciente; 
  
    @OneToMany(mappedBy = "id") 
     private ArrayList<Usuario> Usuario; 
  
    @OneToMany(mappedBy = "id") 
-    private ArrayList<Doctor> doctor; 
+    private ArrayList<Doctor> doctor; */
  
     
     @Override

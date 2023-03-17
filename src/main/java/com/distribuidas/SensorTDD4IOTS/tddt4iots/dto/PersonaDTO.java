@@ -5,6 +5,7 @@ public class PersonaDTO {
     private String nombre;
     private String apellido;
     private String genero;
+    private Integer edad;
     private String numeroDeTelefono;
 
 
@@ -31,7 +32,7 @@ public class PersonaDTO {
     }
 
     public void setApellido(String apellido) {
-        this.id = apellido;
+        this.apellido = apellido;
     }
 
 
@@ -43,13 +44,19 @@ public class PersonaDTO {
         this.genero = genero;
     }
 
+    public Integer getEdad() {
+        return edad;
+    }
 
+    public void setEdad(Integer edad) {
+        this.edad = edad;
+    }
 
     public String getNumeroDeTelefono() {
         return numeroDeTelefono;
     }
 
     public void setNumeroDeTelefono(String numeroDeTelefono) {
-        this.id = numeroDeTelefono;
+        this.numeroDeTelefono = numeroDeTelefono;
     }
 }

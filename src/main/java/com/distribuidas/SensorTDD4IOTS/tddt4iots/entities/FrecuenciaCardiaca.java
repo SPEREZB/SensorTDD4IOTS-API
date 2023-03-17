@@ -37,6 +37,13 @@ import java.util.Date;
     private String riesgoDeInfarto;
 
 
+     public FrecuenciaCardiaca(String idrt,int cantpulsaciones, String fechademedicion,String riesgo, String idus) {
+         this.idrt = idrt;
+         this.cantpulsaciones = cantpulsaciones;
+         this.fechademedicion = fechademedicion;
+         this.riesgoDeInfarto = riesgo;
+         this.idus= idus;
+     }
      public FrecuenciaCardiaca(String idrt,int cantpulsaciones, String fechademedicion,String riesgo) {
          this.idrt = idrt;
          this.cantpulsaciones = cantpulsaciones;

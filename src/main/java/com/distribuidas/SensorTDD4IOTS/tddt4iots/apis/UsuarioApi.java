@@ -3,9 +3,11 @@ package com.distribuidas.SensorTDD4IOTS.tddt4iots.apis;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dao.UsuarioDao;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.FrecuenciaCardiacaDTO;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.dto.UsuarioDTO;
+import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.FrecuenciaCardiaca;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.entities.Usuario;
 import com.distribuidas.SensorTDD4IOTS.tddt4iots.service.UsuarioServiceAPI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.util.List;
 @RequestMapping("/usuario")
 public class UsuarioApi {
 
+
+    public static String miVariable;
     @Autowired
     private UsuarioDao usuarioDAO;
 
@@ -60,9 +64,12 @@ public class UsuarioApi {
             cantidad--;
 
             if (usuarioDTO.getNombreusuario().equals(us) && usuarioDTO.getClave().equals(ps)) {
+                FrecuenciaCardiaca fr= new FrecuenciaCardiaca();
 
+                miVariable=dto.get(index).getId();
                 cont = 0;
                 index = 0;
+
                 return ResponseEntity.ok(true);
             } else {
                 index = index + 1;

@@ -7,11 +7,11 @@ import com.google.firebase.database.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+
+import static com.distribuidas.SensorTDD4IOTS.tddt4iots.apis.UsuarioApi.miVariable;
 
 @CrossOrigin
 @RestController
@@ -23,8 +23,9 @@ public class FrecuenciaCardiacaApi {
 
     @Autowired
     private FrecuenciaCardiacaServiceAPI frecServiceAPI;
-    @Autowired
-    private UsuarioApi usAPI;
+
+
+
 
     @GetMapping
     public ResponseEntity<List<FrecuenciaCardiaca>> getFrecuenciaCardiaca() {
@@ -41,20 +42,7 @@ public class FrecuenciaCardiacaApi {
         return frecServiceAPI.get(id);
     }
 
-    //PRUEBA PARA WEBSOCKET
-    @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public String greeting(String message) throws Exception {
-        Thread.sleep(1000); // simulated delay
-        return "HOLAAA "+message;
-    }
-
-
-
-
     List<FrecuenciaCardiaca> resultados = new ArrayList<>();
-
-
 
     //TODO ESTO ES PARA OBTENER LOS DATOS DE LAS FRECUENCIAS CARDIACAS SEGUN EL PACIENTE
     @GetMapping("/getData")
@@ -78,11 +66,30 @@ public class FrecuenciaCardiacaApi {
                         Integer cont = 0;
                         Object cantpulsaciones = snapshot.child("Bpm").getValue();
                         String fechademedicion = snapshot.child("Fecha").getValue().toString();
+                        String riesgo;
+                        if(Integer.parseInt(cantpulsaciones.toString())<90)
+                        {
+                            riesgo="CUIDADO: PRESION ARTERIAL";
+                        }
+                        else if(Integer.parseInt(cantpulsaciones.toString())>91&&Integer.parseInt(cantpulsaciones.toString())<100)
+                        {
+                            riesgo="SALUDABLE";
+                        }
+                        else
+                        {
+                            riesgo="PELIGRO: RIESGO DE INFARTO";
+                        }
 
-                        FrecuenciaCardiaca frec = new FrecuenciaCardiaca(key, Integer.parseInt(cantpulsaciones.toString()), fechademedicion, "NO");
+                    String miVariableValor = miVariable;
+
+
+
+
+                        FrecuenciaCardiaca frec = new FrecuenciaCardiaca(key, Integer.parseInt(cantpulsaciones.toString()), fechademedicion, riesgo,miVariableValor);
 
                         try {
                             resultados.add(frec);
+                            frecServiceAPI.save(frec);
 
                         } catch (Exception e) {
                             throw new RuntimeException(e);
@@ -105,6 +112,11 @@ public class FrecuenciaCardiacaApi {
     FrecuenciaCardiaca frec = new FrecuenciaCardiaca();
     @GetMapping("/getDataMovil")
     public FrecuenciaCardiaca getDataMovil() {
+        if(frec.getCantpulsaciones()==null)
+        {
+             frec= new FrecuenciaCardiaca("",0,"","","");
+             return frec;
+        }
 
         // Primero, obtenga una referencia a la base de datos de Firebase:
         FirebaseDatabase db = FirebaseDatabase.getInstance();
